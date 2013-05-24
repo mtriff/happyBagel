@@ -1,7 +1,7 @@
 var app = angular.module('app', []);
 
 app.directive('stickyNote', function(socket) {
-	var linker = function(scope, element, attrs) {
+	/*var linker = function(scope, element, attrs) {
 			element.draggable({
 				stop: function(event, ui) {
 					socket.emit('moveNote', {
@@ -23,17 +23,17 @@ app.directive('stickyNote', function(socket) {
 			});
 
 			// Some DOM initiation to make it nice
-			/*
+			
 			element.css('left', '10px');
 			element.css('top', '50px');
 			element.hide().fadeIn();
-			*/
+			
 			var top = (62+126*scope.note.id).toString().concat("px");
 			console.log(scope.note.id);
 			element.css('left', '10px');
 			element.css('top', top);
 		};
-
+		*/
 	var controller = function($scope) {
 			// Incoming broadcast from others
 			socket.on('onNoteUpdated', function(data) {
@@ -74,7 +74,7 @@ app.directive('stickyNote', function(socket) {
 	*/
 	return {
 		restrict: 'A',
-		link: linker,
+		//link: linker,
 		controller: controller,
 		scope: {
 			note: '=',
@@ -114,7 +114,10 @@ we're injecting the $scope object and socket service
 */
 app.controller('MainCtrl', function($scope, socket) {
 
+	//Here, call to the database to load an array of the notes, with the form [newestNote, 2ndNewestNote, ..., 2ndOldestNote, OldestNote]
+	//set $scope.notes to that array, so that the notes are initialized
 	$scope.notes = [];
+	console.log("notes created empty");
 	$scope.id = 0;
 
 	// take note and push
@@ -137,7 +140,10 @@ app.controller('MainCtrl', function($scope, socket) {
 			body: $scope.body
 		};
 
-		$scope.notes.push(note);
+		$scope.title='';
+		$scope.body='';
+
+		$scope.notes.unshift(note);
 		//broadcast to onNoteCreated
 		socket.emit('createNote', note);
 	};

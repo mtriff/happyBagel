@@ -4,7 +4,6 @@ body {
 }
 
 .sticky-note {
-	position: absolute;
 }
 
 .sticky-note .title {
@@ -19,4 +18,12 @@ body {
 	background: transparent;
 	border: none;
 	display: block;
+}
+
+#buttons p {
+	color: #CCC;
+}
+
+#container {
+	padding-bottom: 40px;
 }
