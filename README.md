@@ -7,7 +7,7 @@ A real-time collaboration board using AngularJS and Socket.io.
 
 Clone the angularjs-collab-board repository, run `npm install` to grab the dependencies
 
-Also recommended, run 'npm install -g nodemon'
+Also recommended, run `npm install -g nodemon`
 
 ### Running the app
 
@@ -15,7 +15,7 @@ Runs like a typical express app:
 
     node app.js
     
-    or
+or
     
     nodemon app.js
     
