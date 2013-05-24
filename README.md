@@ -1,17 +1,23 @@
-AngularJS Collab Board
-======================
+happyBagel
+==========
 
 A real-time collaboration board using AngularJS and Socket.io.
 
-## How to use angularjs-collab-board
+## How to use
 
-Clone the angularjs-collab-board repository, run `npm install` to grab the dependencies, and start hacking!
+Clone the angularjs-collab-board repository, run `npm install` to grab the dependencies
+
+Also recommended, run 'npm install -g nodemon'
 
 ### Running the app
 
 Runs like a typical express app:
 
     node app.js
+    
+    or
+    
+    nodemon app.js
     
 ## Resources
 For more information on AngularJS please check out http://angularjs.org/
