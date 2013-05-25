@@ -10,7 +10,7 @@ var express = require('express'),
 	server = require('http').createServer(app),
 	io = require('socket.io').listen(server);
 
-
+var note = require("./models/note.js");
 /*
 tell our express app to use our public directory to serve files
 */
@@ -26,6 +26,7 @@ we're simply broadcasting what event happened so any client listening can be not
 */
 io.sockets.on('connection', function(socket) {
 	socket.on('createNote', function(data) {
+		note.saving(data);
 		socket.broadcast.emit('onNoteCreated', data);
 	});
 
@@ -40,6 +41,10 @@ io.sockets.on('connection', function(socket) {
 	socket.on('deleteNote', function(data){
 		socket.broadcast.emit('onNoteDeleted', data);
 	});
+
+
+	//upon connection, we look at the database
+	note.findAll();
 });
 
 
