@@ -42,7 +42,11 @@ io.sockets.on('connection', function(socket) {
 		socket.broadcast.emit('onNoteDeleted', data);
 	});
 
-
+	socket.on('message', function(data){
+		console.log("message handler: "+data);
+		//clear
+		note.removeAll();
+	});
 	//upon connection, we look at the database
 	note.findAll();
 });
@@ -54,3 +58,5 @@ start up the server and listen to 1337
 server.listen(1337, function(){
 	console.log("Server listening to 1337");
 });
+
+

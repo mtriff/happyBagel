@@ -21,7 +21,15 @@ exports.saving = function(data){ //dir from which to serve files
 
 exports.findAll = function(){
 	console.log("All data from db");
-	var test = Notes.find();
-	console.log(test);
+	Notes.find({}, function(err, data){
+		if(err) console.log("Error getting data: "+err);
+		else {
+			console.log(data);
+		}
+	});
 
+}
+
+exports.removeAll = function(){
+	console.log("Deleting from db");
 }
