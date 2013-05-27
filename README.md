@@ -14,6 +14,8 @@ http://www.netmagazine.com/tutorials/angularjs-collaboration-board-socketio
 "node app.js" or if you have nodemon installed "nodemon app.js"
 
 2a. nodemon
+
 nodemon checks for file changes and restarts the server for you
+
 install globally: sudo npm install -g nodemon
 
