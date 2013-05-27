@@ -1,12 +1,19 @@
 happyBagel
 ==========
-
-## Resources
-For more information on AngularJS please check out http://angularjs.org/
-For more on Express and Jade, http://expressjs.com/ and http://jade-lang.com/ are your friends.
-Big ups to my friend Brian Ford for his Socket.io seed which got me started
-https://github.com/btford/angular-socket-io-seed 
-
-
-##
+Original tutorial:
 http://www.netmagazine.com/tutorials/angularjs-collaboration-board-socketio
+
+## How to start
+
+1. Mongodb
+
+"mongod" to start your mongodb to listen for connections
+
+2. start server
+
+"node app.js" or if you have nodemon installed "nodemon app.js"
+
+2a. nodemon
+nodemon checks for file changes and restarts the server for you
+install globally: sudo npm install -g nodemon
+
