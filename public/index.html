@@ -22,41 +22,95 @@
 		<div class="navbar-inner">
 			<a class="brand" href="#">Title</a>
 			<div class="pull-right" id="buttons">
-				<button class="btn" ng-click="filter('all')">All</button>
+				<button class="btn btn-info" ng-click="filter('all')">All</button>
 				<div class='btn-group'>
 					<button class="btn" ng-click="filter('text')">Text</button>
 					<button class="btn" ng-click="filter('links')">Links</button>
 					<button class="btn" ng-click="filter('code')">Code</button>
 				</div>
+				<button class="btn btn-warning" ng-click="logout()">Logout</button>
 			</div>
 		</div>
 	</div>
 
-	
-	<div class="container" style="height:75px; background:white;"> 
+
+	<div class="span7" id="notes">	
+		<div class="container offset1 span8"> 
 
 
-		<!-- create a new note -->
-		<form class="navbar-form pull-left offset1" id="createNote">
-		  <input ng-model="title" type="text" class="brand span10" placeholder="Title of note">
-		  <textarea ng-model="body" class="span10">{{body}}</textarea>
-		  <button id="createButton" ng-click="createNote(title,body)" class="btn">Create</button>
-		</form>
+			<!-- create a new note -->
+			<form class="navbar-form" id="createNote">
+				<table>
+					<tr>
+						<td class="span6">
+			  				<input ng-model="title" type="text" class="brand span7" placeholder="Title of note">
+						</td>
+						<td rowspan="2" class="span1">
+							<button id="createButton" ng-click="createNote(title,body)" class="btn btn-success">Create</button>
+						</td>
+					</tr>
+					<tr>
+						<td class="span6">
+							<textarea ng-model="body" class="span7">{{body}}</textarea>
+						</td>
+					</tr>
+				</table>  
 
+
+			  
+			  
+			</form>
+
+		</div>
+
+		<div class="container span8 offset1">
+			<br>
+			<div sticky-note ng-repeat="note in notes" note="note" class="alert alert-block sticky-note span7" ondelete="deleteNote(id)">
+				
+				<button type="button" class="close" ng-click="deleteNote(note.id)">&times;</button>
+
+				<input ng-model="note.title" ng-change="updateNote(note)" type="text" class="title span7" >
+				
+				<textarea ng-model="note.body" ng-change="updateNote(note)" class="body span7">{{note.body}}</textarea>
+				
+				<div class="span2">Authors: Matt, Michael</div>
+				<div class="span2">Type: Text</div>
+				<div class="span2">Last Modified: 2013/05/27</div>
+			</div>
+			<br>
+		</div>
 	</div>
 
-	<div class="container" style="background:white;">
+	<div class="container offset1 span4" style="float: right;" id="sidebar">
 		<br>
-		<div sticky-note ng-repeat="note in notes" note="note" class="alert alert-block sticky-note" ondelete="deleteNote(id)">
+		<div class="team">
+			<table class="table">
+				<tr>
+					<td><b>Team Members:</b></td>
+				</tr>
+				<tr>
+					<td>Michael Law</td>
+				</tr>
+				<tr>
+					<td>Matt Triff</td>
+				</tr>
+			</table>
 			
-			<button type="button" class="close" ng-click="deleteNote(note.id)">&times;</button>
-
-			<input ng-model="note.title" ng-change="updateNote(note)" type="text" class="title" >
-			
-			<textarea ng-model="note.body" ng-change="updateNote(note)" class="body">{{note.body}}</textarea>
-		
 		</div>
-		<br>
+		<hr>
+		<div class="chat">
+			<p>Chat Area
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br></p>
+		</div>
 	</div>
 	
 </body>
