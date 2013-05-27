@@ -166,4 +166,25 @@ app.controller('MainCtrl', function($scope, socket) {
 
 		$scope.notes = newNotes;
 	}
+
+	$scope.filter = function(cmd){
+		console.log(" filter("+cmd+")");
+		//switch cas
+		switch(cmd) {
+			case 'clear':
+				console.log("clearing");
+				//tell server to delete all notes
+				socket.emit("message", "clear");
+				//clear our notes array
+				$scope.notes = [];
+				break;
+			case 'all':
+				console.log("displaying all");
+				break;
+			default:
+				console.log("unknown filter");
+		}
+	}
+
+
 });
