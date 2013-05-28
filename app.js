@@ -48,7 +48,7 @@ io.sockets.on('connection', function(socket) {
 		note.removeAll();
 	});
 	//upon connection, we look at the database
-	note.findAll();
+	note.findAll(socket);
 });
 
 

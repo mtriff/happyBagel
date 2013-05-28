@@ -130,6 +130,18 @@ app.controller('MainCtrl', function($scope, socket) {
 		$scope.handleDeletedNoted(data.id);
 	});
 
+	socket.on('onLoad', function(data){
+		console.log("recieved message");
+		console.log(data);
+		if (data == null){
+			console.log("onLoad complete: no data");
+		} else {
+			$scope.notes = data;
+			$scope.id = data.length;
+			console.log("onLoad complete");
+		}
+	});
+
 	//create and push to notes and broadcast note
 	$scope.createNote = function(title, body) {
 		console.log($scope.title);
