@@ -25,6 +25,11 @@ we're simply broadcasting what event happened so any client listening can be not
 
 */
 io.sockets.on('connection', function(socket) {
+	//load all notes
+	note.findAll(socket);
+
+	//load chat history
+
 	socket.on('createNote', function(data) {
 		note.saving(data);
 		socket.broadcast.emit('onNoteCreated', data);
@@ -44,13 +49,19 @@ io.sockets.on('connection', function(socket) {
 		socket.broadcast.emit('onNoteDeleted', data);
 	});
 
-	socket.on('message', function(data){
-		console.log("message handler: "+data);
+	socket.on('filter', function(data){
+		console.log("filter handler: "+data);
 		//clear
 		note.removeAll();
 	});
-	//upon connection, we look at the database
-	note.findAll(socket);
+	
+	socket.on('chat', function(data){
+		console.log('chat data:'+data);
+		//TODO: put into database
+
+		//tell others to add to chat box
+		io.sockets.emit('chat', data);
+	})
 });
 
 

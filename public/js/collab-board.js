@@ -186,7 +186,7 @@ app.controller('MainCtrl', function($scope, socket) {
 			case 'clear':
 				console.log("clearing");
 				//tell server to delete all notes
-				socket.emit("message", "clear");
+				socket.emit("filter", "clear");
 				//clear our notes array
 				$scope.notes = [];
 				break;

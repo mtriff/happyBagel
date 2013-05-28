@@ -8,6 +8,7 @@
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
 	<script src="/js/collab-board.js"></script>	
+	<script src="/js/chat.js"></script>	
 
 	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="/css/app.css">
@@ -100,19 +101,11 @@
 			
 		</div>
 		<hr>
-		<div class="chat">
-			<p>Chat Area
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br></p>
+		<div id="chatbody" class="chat">
+			<br />
 		</div>
+		<input id="chatmessage"> <!--enter to send-->
+		<input id="send" type="submit" value="send"> <!-- send button -->
 	</div>
 	
 </body>
