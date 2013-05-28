@@ -31,6 +31,7 @@ io.sockets.on('connection', function(socket) {
 	});
 
 	socket.on('updateNote', function(data) {
+		note.updateNote(data);
 		socket.broadcast.emit('onNoteUpdated', data);
 	});
 

@@ -28,7 +28,11 @@ exports.findAll = function(socket){
 		}
 		else {
 			var notes = [];
+			var maxId = 0;
 			for (var i = 0; i<data.length; i++){
+				if (data[i].id > maxId){
+					maxId = data[i].id;
+				}
 				var note = {
 					id: data[i].id,
 					title: data[i].title,
@@ -36,6 +40,7 @@ exports.findAll = function(socket){
 				}
 				notes.unshift(note);
 			}
+			notes.push(maxId);
 			socket.emit('onLoad', notes);
 		}
 	});
@@ -55,7 +60,7 @@ exports.removeAll = function(){
 
 
 exports.deleteNote = function (data){
-	console.log("deleting note: with id "+data.id);
+	console.log("deleting note with id "+data.id);
 	Notes.remove({id:data.id}, function(err){
 		if (err){
 			console.log("error deleting one note"+err);
@@ -65,3 +70,11 @@ exports.deleteNote = function (data){
 	})
 
 }
+
+exports.updateNote = function(data){
+	console.log("updating note with id "+data.id);
+	Notes.update({id:data.id}, {title:data.title, body:data.body}).exec();
+}
+
+
+

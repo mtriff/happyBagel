@@ -1,8 +1,0 @@
-=== note ID's === 
-each note maintains it's unique id
-once a note gets deleted, the id does not get reused
---> onCreate will create a note with id = scope.id++
---> onLoad: find (sorted by ID) and display the sorted list of notes
-		we also need to set scope.id to the highest id from the results
---> onDelete: just remove the note with id from db
---> update: find by Id, easy because they are unique

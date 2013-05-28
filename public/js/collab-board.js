@@ -131,14 +131,14 @@ app.controller('MainCtrl', function($scope, socket) {
 	});
 
 	socket.on('onLoad', function(data){
-		console.log("recieved message");
 		console.log(data);
 		if (data == null){
 			console.log("onLoad complete: no data");
 		} else {
+			//grab the max id
+			$scope.id = data.pop() + 1;
 			$scope.notes = data;
-			$scope.id = data.length;
-			console.log("onLoad complete");
+			console.log("onLoad complete: maxId: "+$scope.id);
 		}
 	});
 
