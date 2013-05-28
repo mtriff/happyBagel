@@ -46,9 +46,22 @@ exports.removeAll = function(){
 	console.log("Clearing collection");
 	Notes.remove({}, function (err){
 		if (err){
-			console.log("error"+err);
+			console.log("error removing all notes:"+err);
 		} else {
 			console.log(" done clearing");
 		}
 	});
+}
+
+
+exports.deleteNote = function (data){
+	console.log("deleting note: with id "+data.id);
+	Notes.remove({id:data.id}, function(err){
+		if (err){
+			console.log("error deleting one note"+err);
+		} else {
+			console.log("done deleteing");
+		}
+	})
+
 }

@@ -39,6 +39,7 @@ io.sockets.on('connection', function(socket) {
 	});
 
 	socket.on('deleteNote', function(data){
+		note.deleteNote(data);
 		socket.broadcast.emit('onNoteDeleted', data);
 	});
 
