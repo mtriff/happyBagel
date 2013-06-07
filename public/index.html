@@ -1,112 +1,36 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html>
+
 <head>
-	<title>AngularJS CollabBoard2</title>
-	
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular.min.js"></script>
-	<script src="/js/collab-board.js"></script>	
-	<script src="/js/chat.js"></script>	
+<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 
-	<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="/css/app.css">
+<script>
+
+    $(document).ready(function(){
+    	
+    	var room = document.getElementById("room");
+		var go = document.getElementById("go");
+
+	    go.onclick = enterRoom = function() {
+	    	window.location.href = room.value;
+	    };
+
+        $("#room").keyup(function(e){
+            if (e.keyCode == 13){
+                enterRoom();
+            }
+        });
+    });
+
+    /* TODO
+    	password protection
+    */
+</script>
+
 </head>
-
-
-
-<body ng-controller="MainCtrl">
-
-	<!--nav bar -->
-	<div class="navbar navbar-inverse">
-		<div class="navbar-inner">
-			<a class="brand" href="#">Title</a>
-			<div class="pull-right" id="buttons">
-				<button class="btn" ng-click="filter('clear')">Clear</button>
-				<button class="btn btn-info" ng-click="filter('all')">All</button>
-				<div class='btn-group'>
-					<button class="btn" ng-click="filter('text')">Text</button>
-					<button class="btn" ng-click="filter('links')">Links</button>
-					<button class="btn" ng-click="filter('code')">Code</button>
-				</div>
-				<button class="btn btn-warning" ng-click="logout()">Logout</button>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="span7" id="notes">	
-		<div class="container offset1 span8"> 
-
-
-			<!-- create a new note -->
-			<form class="navbar-form" id="createNote">
-				<table>
-					<tr>
-						<td class="span6">
-			  				<input ng-model="title" type="text" class="brand span7" placeholder="Title of note">
-						</td>
-						<td rowspan="2" class="span1">
-							<button id="createButton" ng-click="createNote(title,body)" class="btn btn-success">Create</button>
-						</td>
-					</tr>
-					<tr>
-						<td class="span6">
-							<textarea ng-model="body" class="span7">{{body}}</textarea>
-						</td>
-					</tr>
-				</table>  
-
-
-			  
-			  
-			</form>
-
-		</div>
-
-		<div class="container span8 offset1">
-			<br>
-			<div sticky-note ng-repeat="note in notes" note="note" class="alert alert-block sticky-note span7" ondelete="deleteNote(id)">
-				
-				<button type="button" class="close" ng-click="deleteNote(note.id)">&times;</button>
-
-				<input ng-model="note.title" ng-change="updateNote(note)" type="text" class="title span7" >
-				
-				<textarea ng-model="note.body" ng-change="updateNote(note)" class="body span7">{{note.body}}</textarea>
-				
-				<div class="span2">id: {{note.id}}</div>
-				<div class="span2">Authors: Matt, Michael</div>
-				<div class="span2">Type: Text</div>
-				<div class="span2">Last Modified: 2013/05/27</div>
-			</div>
-			<br>
-		</div>
-	</div>
-
-	<div class="container offset1 span4" style="float: right;" id="sidebar">
-		<br>
-		<div class="team">
-			<table class="table">
-				<tr>
-					<td><b>Team Members:</b></td>
-				</tr>
-				<tr>
-					<td>Michael Law</td>
-				</tr>
-				<tr>
-					<td>Matt Triff</td>
-				</tr>
-			</table>
-			
-		</div>
-		<hr>
-		<div id="chatbody" class="chat">
-			<br />
-		</div>
-		<input id="chatmessage"> <!--enter to send-->
-		<input id="send" type="submit" value="send"> <!-- send button -->
-	</div>
-	
+<body>
+<input id="room">
+<input id="go" type="submit" value="Go">
 </body>
+
 </html>
