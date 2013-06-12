@@ -1,39 +1,7 @@
 var app = angular.module('app', []);
 
 app.directive('stickyNote', function(socket) {
-	/*var linker = function(scope, element, attrs) {
-			element.draggable({
-				stop: function(event, ui) {
-					socket.emit('moveNote', {
-						id: scope.note.id,
-						x: ui.position.left,
-						y: ui.position.top
-					});
-				}
-			});
 
-			socket.on('onNoteMoved', function(data) {
-				// Update if the same note
-				if(data.id == scope.note.id) {
-					element.animate({
-						left: data.x,
-						top: data.y
-					});
-				}
-			});
-
-			// Some DOM initiation to make it nice
-			
-			element.css('left', '10px');
-			element.css('top', '50px');
-			element.hide().fadeIn();
-			
-			var top = (62+126*scope.note.id).toString().concat("px");
-			console.log(scope.note.id);
-			element.css('left', '10px');
-			element.css('top', top);
-		};
-		*/
 	var controller = function($scope) {
 			// Incoming broadcast from others
 			socket.on('onNoteUpdated', function(data) {
@@ -59,19 +27,7 @@ app.directive('stickyNote', function(socket) {
 			};
 		};
 
-	/*
-	restrict
-		restrict directive to a certain type of HTML element
-		E (element) or A (attribute) or CSS or comment
-	link
-		all DOM manipulation code
-	controller
-		like the main controller
-		$scope object we're passing in is specific to the DOM element the directive lives on
-	scope:
-		read up on isolated scope
-
-	*/
+	
 	return {
 		restrict: 'A',
 		//link: linker,
@@ -86,7 +42,14 @@ app.directive('stickyNote', function(socket) {
 
 //a service that wraps socket.io
 app.factory('socket', function($rootScope) {
-	var socket = io.connect();
+	var socket = io.connect(window.location.pathname);
+	socket.on('connect', function(){
+		//we can do something upon connection here.
+
+		//console.log(window.location.pathname);
+		//socket.emit("joinRoom", window.location.pathname.substring(1));
+
+	});
 	return {
 		on: function(eventName, callback) {
 			socket.on(eventName, function() {
@@ -114,22 +77,15 @@ we're injecting the $scope object and socket service
 */
 app.controller('MainCtrl', function($scope, socket) {
 
-	//Here, call to the database to load an array of the notes, with the form [newestNote, 2ndNewestNote, ..., 2ndOldestNote, OldestNote]
-	//set $scope.notes to that array, so that the notes are initialized
 	$scope.notes = [];
-	console.log("notes created empty");
 	$scope.id = 0;
 
-	// take note and push
-	socket.on('onNoteCreated', function(data) {
-		$scope.notes.push(data);
+	socket.on('general', function(data) {
+		console.log(data);
 	});
 
-	//handle as well.
-	socket.on('onNoteDeleted', function(data) {
-		$scope.handleDeletedNoted(data.id);
-	});
 
+	//load document from server
 	socket.on('onLoad', function(data){
 		console.log(data);
 		if (data == null){
@@ -142,11 +98,22 @@ app.controller('MainCtrl', function($scope, socket) {
 		}
 	});
 
+
+
+	// listener for actions happening from other clients
+	socket.on('onNoteCreated', function(data) {
+		$scope.notes.push(data);
+	});
+
+	socket.on('onNoteDeleted', function(data) {
+		$scope.handleDeletedNoted(data.id);
+	});
+
+	
 	//create and push to notes and broadcast note
 	$scope.createNote = function(title, body) {
 		console.log($scope.title);
 		var note = {
-			//id: new Date().getTime(),
 			id: $scope.id++,
 			title: $scope.title,
 			body: $scope.body

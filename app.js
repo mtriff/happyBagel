@@ -6,11 +6,16 @@ var express = require('express'),
 	io = require('socket.io').listen(server),
 	fs = require('fs'),
 	mime = require('mime'),
-	path = require('path');
+	path = require('path'),
+	helper = require('./controllers/sockethelper');
 
 io.set('log level', 1);
 
+
+//set up room list and socket connections
 var note = require("./models/note.js");
+var arrayOfRooms = [];
+note.findAllRooms(arrayOfRooms, io);
 
 app.configure(function() {
 	app.use(express.favicon());//serve default favicon
@@ -22,6 +27,13 @@ app.configure(function() {
 	app.use(app.router);
 });
 
+
+function searchStringInArray (str, strArray) {
+    for (var j=0; j<strArray.length; j++) {
+        if (strArray[j].match(str)) return j;
+    }
+    return -1;
+}
 
 function send404(response) {
 	response.writeHead(404, {'Content-Type': 'text/plain'});
@@ -61,24 +73,41 @@ function serveStatic(response, absPath){
 }
 
 
-
 app.get("/*", function (req, res){
-	console.log("Get request for " + req.url);	
 
-	// TODO: change this 
-	var filePath = false;
-	filePath = 'public/main.html';
-	var absPath = './' + filePath;
-	serveStatic(res, absPath);
-	// ---------------
+	serveStatic(res, "./public/main.html");	
 
-	//TODO: grab room data from db for that room
+	console.log("GET request " + req.url);	
+	if (searchStringInArray(req.url, arrayOfRooms) == -1){
+		console.log(" created room");
+		helper.setUpSockets(req.url,io);
+
+		//store
+		note.addNewRoom(req.url); 
+		arrayOfRooms.push(req.url);
+	}
+	else {
+		console.log(" joined room");
+	}
+
+
 });
 
+
+/*
 //socket stuff
-io.sockets.on('connection', function(socket) {
-	//load all notes
-	note.findAll(socket);
+io.(sockets.on('connection', function(socket) {
+	console.log("sockets.on connection");
+
+	socket.on('joinRoom', function(data){
+		console.log("socket joinRoom: "+data);
+		socket.join(data);
+		console.log(socket.room);
+		socket.broadcast.to(data).emit('test', "servermessage");
+		//load all notes from room
+		//note.findAll(socket);
+	});
+	
 
 	//load chat history
 
@@ -115,13 +144,13 @@ io.sockets.on('connection', function(socket) {
 		io.sockets.emit('chat', data);
 	})
 });
-
+*/
 
 /*
 start up the server and listen to 1337
 */
 server.listen(1337, function(){
-	console.log("Server listening to 1337");
+	console.log("server listening 1337");
 });
 
 
