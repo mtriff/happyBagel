@@ -1,6 +1,6 @@
 {
-  "name": "angular-collab-board",
-  "description": "AngularJS Collobaration Board",
+  "name": "put project name here",
+  "description": "project description",
   "version": "0.0.1-1",
   "private": true,
   "dependencies": {
@@ -9,7 +9,7 @@
     "mongoose": "~3.6.11",
     "mime": "~1.2.9"
   },
-  "subdomain": "simpulton.angularjs-collab-board",
+  "subdomain": "mydomain",
   "scripts": {
     "start": "app.js"
   },

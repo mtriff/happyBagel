@@ -1,0 +1,112 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+
+#nav {
+    height:52px;
+    background-color: #EEEEEE;
+    width: 100%;
+}
+.navbar {
+    margin-bottom:0px;
+}
+
+
+
+
+#container {
+    position: absolute;
+    top: 52px;
+    width: 100%;
+    bottom: 0;
+
+  
+}
+
+#side {
+    height:100%;
+    float: left;
+    width: 300px;
+    background-color: #EEEEEE;
+}
+
+#side_newNote
+{
+    background:#EEEEEE;
+}
+
+#newNote_title
+{
+    margin-top:10px;
+    margin-left: 10px;
+    margin-bottom: 1px;
+    width:220px !important;
+
+}
+#newNote_body 
+{
+
+    margin-left: 10px;
+    width:220px !important;
+    height: 60px !important;
+}
+
+#newNote_add
+{
+    margin-top:30px;
+}
+
+
+#side_users
+{
+    padding: 5px 5px 5px 5px;
+    background:#EEEEEE;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+
+#chatArea_box
+{
+    background:#eff4ff;
+    overflow: auto;
+    padding: 5px 5px 5px 5px;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+#chatArea_input
+{
+    background-color: #eff4ff;
+    width:286px !important;
+    height: 40px !important;
+    margin-bottom: 0;
+}               
+
+
+
+#main 
+{
+    margin-left:300px;
+    height: 100%;
+    background-color: #EEEEEE;   
+}
+
+#main_filter
+{
+    background-color: #EEEEEE;   
+
+}
+
+#main_notes
+{
+     background-color: #EEEEEE;   
+
+}
+
+

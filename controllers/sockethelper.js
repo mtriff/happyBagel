@@ -26,15 +26,14 @@ exports.setUpSockets =  function (path, io){
 			socket.broadcast.emit('onNoteDeleted', data);
 		});
 
-		//listener for chat
-		/* TODO: FINISH
+		//chat
 		socket.on('chat', function(data){
 			console.log('chat data:'+data);
 
-			//tell others to add to chat box
-			io.sockets.emit('chat', data);
+			//add to database
+
+			socket.broadcast.emit('chat', data);
 		});
-		*/
 
 	})
 }

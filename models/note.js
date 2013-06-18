@@ -71,6 +71,7 @@ exports.initLoad = function(room, socket){
 			socket.emit('onLoad', null);
 		}
 		else {
+			//
 			var notes = data[0].notes;
 			
 			var returnNotes = [];
@@ -89,6 +90,8 @@ exports.initLoad = function(room, socket){
 			}
 			returnNotes.push(maxId); //put the maxId at the very end
 			
+
+			console.log(returnNotes);
 
 			socket.emit('onLoad', returnNotes);
 		}

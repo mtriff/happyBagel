@@ -10,8 +10,8 @@ var express = require('express'),
 	helper = require('./controllers/sockethelper');
 
 io.set('log level', 1);
-
-
+express.static.mime.define({'application/font-woff': ['woff']});
+ 
 //set up room list and socket connections
 var note = require("./models/note.js");
 var arrayOfRooms = [];
@@ -42,6 +42,8 @@ function send404(response) {
 }
 
 function sendFile(response, filePath, fileContents){
+
+	console.log("mime type:"+mime.lookup(path.basename(filePath)));
 	response.writeHead(
 		200,
 		{"content-type":mime.lookup(path.basename(filePath))}
@@ -94,61 +96,6 @@ app.get("/*", function (req, res){
 });
 
 
-/*
-//socket stuff
-io.(sockets.on('connection', function(socket) {
-	console.log("sockets.on connection");
-
-	socket.on('joinRoom', function(data){
-		console.log("socket joinRoom: "+data);
-		socket.join(data);
-		console.log(socket.room);
-		socket.broadcast.to(data).emit('test', "servermessage");
-		//load all notes from room
-		//note.findAll(socket);
-	});
-	
-
-	//load chat history
-
-	socket.on('createNote', function(data) {
-		note.saving(data);
-		socket.broadcast.emit('onNoteCreated', data);
-	});
-
-	socket.on('updateNote', function(data) {
-		note.updateNote(data);
-		socket.broadcast.emit('onNoteUpdated', data);
-	});
-
-	socket.on('moveNote', function(data){
-		socket.broadcast.emit('onNoteMoved', data);
-	});
-
-	socket.on('deleteNote', function(data){
-		note.deleteNote(data);
-		socket.broadcast.emit('onNoteDeleted', data);
-	});
-
-	socket.on('filter', function(data){
-		console.log("filter handler: "+data);
-		//clear
-		note.removeAll();
-	});
-	
-	socket.on('chat', function(data){
-		console.log('chat data:'+data);
-		//TODO: put into database
-
-		//tell others to add to chat box
-		io.sockets.emit('chat', data);
-	})
-});
-*/
-
-/*
-start up the server and listen to 1337
-*/
 server.listen(1337, function(){
 	console.log("server listening 1337");
 });
