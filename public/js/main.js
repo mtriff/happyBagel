@@ -47,8 +47,8 @@ app.factory('socket', function($rootScope) {
 
 	//we can send something to server upon connection
 	socket.on('connect', function(){
-		//console.log(window.location.pathname);
-		//socket.emit("joinRoom", window.location.pathname.substring(1));
+		console.log(window.location.pathname);
+		socket.emit("joinRoom", window.location.pathname);
 	});
 
 	return {
@@ -105,10 +105,13 @@ app.controller('MainCtrl', function($scope, socket) {
 
 
 	/*
-		MISC
+		CHAT
 	*/
 	socket.on('general', function(data) {
 		console.log("server says: "+data);
+	});
+	socket.on('joinRoom', function(data) {
+			console.log("joinRoom: you are number "+data);
 	});
 
 

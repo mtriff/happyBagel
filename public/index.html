@@ -2,6 +2,32 @@
 <html>
 <head>
 <script src="/lib/jquery-1.10.1.min.js"></script>
+
+<link href="/lib/bootstrap.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<style>
+h1, h2, h3, h4, h5, h6 {
+    display:inline;
+    font-weight: normal;
+}
+
+.centered {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    margin-left: -156px;
+    margin-top: -50px;
+}
+#title {
+    width:312px;
+    height:100px;
+}
+#room{
+    border-style:none;
+    border-bottom: 1px dotted rgba(0,0,0,0.4);
+}
+</style>
+
 <script>
 
     $(document).ready(function(){
@@ -27,8 +53,22 @@
 
 </head>
 <body>
-<input id="room">
-<input id="go" type="submit" value="Go">
+    <div id="title" class="centered">
+        <div>
+            <h1>rocketNotes<h3>.io</h3></h1>
+        </div>
+        <div>
+            <center>
+                <h1>&#47;
+                    <input id="room" placeholder="your room name">
+                    <button class="btn" id="go">
+                        <i class="icon-circle-arrow-right icon-large"></i>
+                    </button>   
+                </h1>
+            </center>
+        </div>
+    <div>
+
 </body>
 
 </html>

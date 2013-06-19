@@ -3,6 +3,7 @@ body {
     height: 100%;
     width: 100%;
     padding: 0;
+    background-color: #EEEEEE;
 }
 
 #nav {
@@ -15,15 +16,12 @@ body {
 }
 
 
-
-
 #container {
+    background-color: #EEEEEE;
     position: absolute;
     top: 52px;
     width: 100%;
     bottom: 0;
-
-  
 }
 
 #side {
@@ -63,11 +61,15 @@ body {
 #side_users
 {
     padding: 5px 5px 5px 5px;
+    height:auto;
+    max-height:130px;
+    overflow:auto;
     background:#EEEEEE;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
+
 
 
 #chatArea_box
@@ -93,7 +95,6 @@ body {
 #main 
 {
     margin-left:300px;
-    height: 100%;
     background-color: #EEEEEE;   
 }
 

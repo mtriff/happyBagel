@@ -2,6 +2,7 @@
 var note = require("../models/note.js");
 
 exports.setUpSockets =  function (path, io){
+	var userId = 0;
 	io.of(path).on('connection', function(socket){
 		var room = socket.namespace.name;
 
@@ -9,6 +10,14 @@ exports.setUpSockets =  function (path, io){
 		
 		//initial load 
 		note.initLoad(room, socket);
+		
+		//listener for users joining the room
+		socket.on('joinRoom', function(data){
+			console.log("user joined");
+			userId = userId + 1;
+			socket.emit('joinRoom',userId);
+		})
+
 
 		//listener for notes
 		socket.on('createNote', function(data) {

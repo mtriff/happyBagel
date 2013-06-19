@@ -90,6 +90,7 @@ app.get("/*", function (req, res){
 	}
 	else {
 		console.log(" joined room");
+		
 	}
 
 
