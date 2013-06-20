@@ -43,7 +43,6 @@ function send404(response) {
 
 function sendFile(response, filePath, fileContents){
 
-	console.log("mime type:"+mime.lookup(path.basename(filePath)));
 	response.writeHead(
 		200,
 		{"content-type":mime.lookup(path.basename(filePath))}
@@ -90,7 +89,7 @@ app.get("/*", function (req, res){
 	}
 	else {
 		console.log(" joined room");
-		
+
 	}
 
 

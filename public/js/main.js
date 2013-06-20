@@ -76,9 +76,55 @@ app.factory('socket', function($rootScope) {
 //controller MainCtrl, inject $scope object and socket service
 app.controller('MainCtrl', function($scope, socket) {
 
+	$scope.userlist = [];
+
 	$scope.notes = [];
 	$scope.id = 0;
 
+
+	/*
+		JOIN
+	*/
+	socket.on('general', function(data) {
+		console.log("server says: "+data);
+	});
+
+	socket.on('joinRoom', function(data) {
+		console.log("joinRoom: you are number "+data);
+		socket.username=data;
+		$scope.username = data;
+		console.log("user"+socket.username);
+	});
+
+	socket.on('updateUserList', function(data){
+		console.log("othersJoinRoom: userList ");
+		console.log(data);
+		$scope.userlist = data;
+	});
+
+
+	/*
+		CHAT
+	*/
+	$scope.toggleSelectColor = function(data) {
+		console.log("toggleSelectColor:"+data);
+		$scope.userColor=data;
+	};
+
+	/*
+		LOAD
+	*/
+	socket.on('onLoad', function(data){
+		console.log(data);
+		if (data == null){
+			console.log("onLoad complete: no data");
+		} else {
+			//grab the max id
+			$scope.id = data.pop() + 1;
+			$scope.notes = data;
+			console.log("onLoad complete: maxId: "+$scope.id);
+		}
+	});
 
 	/*
 		CREATE
@@ -102,34 +148,6 @@ app.controller('MainCtrl', function($scope, socket) {
 	socket.on('onNoteCreated', function(data) {
 		$scope.notes.unshift(data);
 	});
-
-
-	/*
-		CHAT
-	*/
-	socket.on('general', function(data) {
-		console.log("server says: "+data);
-	});
-	socket.on('joinRoom', function(data) {
-			console.log("joinRoom: you are number "+data);
-	});
-
-
-	/*
-		LOAD
-	*/
-	socket.on('onLoad', function(data){
-		console.log(data);
-		if (data == null){
-			console.log("onLoad complete: no data");
-		} else {
-			//grab the max id
-			$scope.id = data.pop() + 1;
-			$scope.notes = data;
-			console.log("onLoad complete: maxId: "+$scope.id);
-		}
-	});
-
 
 	/*
 		DELETE

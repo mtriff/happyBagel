@@ -6,6 +6,9 @@ body {
     background-color: #EEEEEE;
 }
 
+textarea {resize: none}
+
+
 #nav {
     height:52px;
     background-color: #EEEEEE;
@@ -35,6 +38,10 @@ body {
 {
     background:#EEEEEE;
 }
+#side_newNote:hover
+{
+    background:#eff4ff;
+}
 
 #newNote_title
 {
@@ -42,6 +49,7 @@ body {
     margin-left: 10px;
     margin-bottom: 1px;
     width:220px !important;
+    border-style:none;
 
 }
 #newNote_body 
@@ -50,6 +58,8 @@ body {
     margin-left: 10px;
     width:220px !important;
     height: 60px !important;
+    border-style:none;
+    
 }
 
 #newNote_add
@@ -58,23 +68,55 @@ body {
 }
 
 
-#side_users
+#side_user
 {
-    padding: 5px 5px 5px 5px;
-    height:auto;
-    max-height:130px;
+    
+    height:130px;
     overflow:auto;
     background:#EEEEEE;
+    padding: 5px 5px 5px 5px;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
+#user_color 
+{
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    background: red;
+    float:left;
+    border-style: solid;
+    border-width: thin;
 
+}
+
+#user_self 
+{
+    border-style:none;
+    background-color:#EEEEEE;
+    border-bottom: 2px dotted rgba(0,0,0,0.4);
+    margin-left: 10px;
+}
+
+#user_selectFromTable
+{
+    margin-left: 10px;
+    margin-top: 5px;
+    height: 20px;
+}
+
+#user_selectFromTable td
+{
+    width: 20px;
+    border-style: solid;
+    border-width: thin;
+}
 
 #chatArea_box
 {
-    background:#eff4ff;
+    background:#ffffff;
     overflow: auto;
     padding: 5px 5px 5px 5px;
     -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -109,5 +151,6 @@ body {
      background-color: #EEEEEE;   
 
 }
+
 
 

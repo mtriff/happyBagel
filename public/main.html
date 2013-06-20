@@ -47,15 +47,32 @@
 		</div>
 		
 
-		<div id="side_users">
-			<p> In the room </p>
-			<input type="text" placeholder="you">
-			<p> others are </p>
-			<p> others are </p>
+		<div id="side_user">
+			<div id="user_color" ng-model="userColor" style="background: {{userColor}}"></div>
 			
-			<p> others are </p>
-			
-			<p style="margin-bottom:0px;"> also in this room </p>
+			<input id="user_self" ng-model="username" maxlength="30"  tabindex="-1">
+
+			<div id="user_selectColor" style="display:none;">
+				<table id="user_selectFromTable">
+					<tr>
+						<!--http://stackoverflow.com/questions/11578867/is-there-a-list-of-standard-tile-colors-for-metro-style-windows-8-apps-->
+						<td class="colorSelected" style="background: #A200FF;" ng-click="toggleSelectColor('#A200FF')"></td>
+						<td class="colorSelected" style="background: #FF0097;" ng-click="toggleSelectColor('#FF0097')"></td>
+						<td class="colorSelected" style="background: #00ABA9;" ng-click="toggleSelectColor('#00ABA9')"></td>
+						<td class="colorSelected" style="background: #8CBF26;" ng-click="toggleSelectColor('#8CBF26')"></td>
+						<td class="colorSelected" style="background: #A05000;" ng-click="toggleSelectColor('#A05000')"></td>
+						<td class="colorSelected" style="background: #E671B8;" ng-click="toggleSelectColor('#E671B8')"></td>
+						<td class="colorSelected" style="background: #F09609;" ng-click="toggleSelectColor('#F09609')"></td>
+						<td class="colorSelected" style="background: #1BA1E2;" ng-click="toggleSelectColor('#1BA1E2')"></td>
+						<td class="colorSelected" style="background: #E51400;" ng-click="toggleSelectColor('#E51400')"></td>
+						<td class="colorSelected" style="background: #339933;" ng-click="toggleSelectColor('#339933')"></td>
+					</tr>
+				</table>
+			</div>
+
+			<div ng-repeat="user in userlist">
+				<p>{{user}}</p>
+			</div>
 		</div>
 
 		
