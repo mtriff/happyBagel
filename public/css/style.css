@@ -10,7 +10,7 @@ textarea {resize: none}
 
 
 #nav {
-    height:52px;
+    height: 52px;
     background-color: #EEEEEE;
     width: 100%;
 }
@@ -36,6 +36,7 @@ textarea {resize: none}
 
 #side_newNote
 {
+    height:120px;
     background:#EEEEEE;
 }
 #side_newNote:hover
@@ -70,7 +71,6 @@ textarea {resize: none}
 
 #side_user
 {
-    
     height:130px;
     overflow:auto;
     background:#EEEEEE;
@@ -79,13 +79,15 @@ textarea {resize: none}
     -moz-box-sizing: border-box;    /* Firefox, other Gecko */
     box-sizing: border-box;         /* Opera/IE 8+ */
 }
+#side_user::-webkit-scrollbar { 
+    display: none; 
+}
 
 #user_color 
 {
     margin-left: 5px;
     width: 20px;
     height: 20px;
-    background: red;
     float:left;
     border-style: solid;
     border-width: thin;
@@ -103,7 +105,7 @@ textarea {resize: none}
 #user_selectFromTable
 {
     margin-left: 10px;
-    margin-top: 5px;
+    margin-top: 8px;
     height: 20px;
 }
 
@@ -112,6 +114,22 @@ textarea {resize: none}
     width: 20px;
     border-style: solid;
     border-width: thin;
+}
+
+.user_otherUserColor
+{
+    margin-left: 10px;
+    width: 15px;
+    height: 15px;
+    float:left;
+    border-style: solid;
+    border-width: thin;
+}
+.user_otherUserName
+{
+    margin-top:9px;
+    margin-left:30px;
+    margin-bottom: 9px;
 }
 
 #chatArea_box

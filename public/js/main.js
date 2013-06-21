@@ -1,15 +1,36 @@
 var app = angular.module('app', []);
 
+//original on stackoverflow: how-can-i-detect-onkeyup-in-angularjs
+app.directive('onKeyup', function() {
+	//onKeyup is an attribute, returning a function (the link)
+    return function(scope, elm, attrs) {      
+        
+        var sendMessageFn = scope.$eval(attrs.onKeyup);
+        //element will bind to key inputs
+        elm.bind('keyup', function(evt) {
+        	console.log(evt.which);
+        	if (evt.which == 13 || evt.which == 27) {
+        		//$apply makes sure that angular knows 
+            	//we're changing something
+            	scope.$apply(function() {
+                	sendMessageFn.call(scope, evt.which);
+            	});
+        	}
+
+        });
+    };
+});
+
 app.directive('stickyNote', function(socket) {
 
 	var controller = function($scope) {
 
 		/*
 			DELETE
+			calls the ctrl's deleteNote and gives it the id 
 		*/
 		$scope.deleteNote = function(id) {
-			console.log("Deleting "+id);
-			$scope.ondelete({
+			$scope.ondelete({ 
 				id: id
 			});
 		};
@@ -32,11 +53,10 @@ app.directive('stickyNote', function(socket) {
 	
 	return {
 		restrict: 'A',
-		//link: linker,
 		controller: controller,
 		scope: {
-			note: '=',
-			ondelete: '&'
+			note: '=', //send in a property on the scope to bind to
+			ondelete: '&' //& - so we can call the ctrl's deleteNote
 		}
 	};
 });
@@ -77,7 +97,6 @@ app.factory('socket', function($rootScope) {
 app.controller('MainCtrl', function($scope, socket) {
 
 	$scope.userlist = [];
-
 	$scope.notes = [];
 	$scope.id = 0;
 
@@ -85,46 +104,102 @@ app.controller('MainCtrl', function($scope, socket) {
 	/*
 		JOIN
 	*/
-	socket.on('general', function(data) {
-		console.log("server says: "+data);
-	});
-
 	socket.on('joinRoom', function(data) {
+		//store userId
 		console.log("joinRoom: you are number "+data);
 		socket.username=data;
+		var inputName = document.getElementById("user_self");
+		inputName.name = data;
 		$scope.username = data;
-		console.log("user"+socket.username);
+
+		//update color
+		var randColor = '#'+(Math.random().toString(16) + '000000').slice(2, 8);
+		$scope.toggleSelectColor(randColor);
+
+		//update name
+		var n_match = ntc.name(randColor); //http://chir.ag/projects/ntc/
+		socket.emit('chat', {cmd:"name", 
+			message: {
+				userId: socket.username,
+				name: n_match[1]
+			}}
+		);
 	});
+	
+	$scope.toggleSelectColor = function(data) {
+		if (data == "random"){
+			data = '#'+(Math.random().toString(16) + '000000').slice(2, 8);
+		}
+		$scope.userColor=data;
+
+		socket.emit('chat', {cmd:"color", 
+			message: {
+				userId: socket.username,
+				color: $scope.userColor
+			}}
+		);
+
+	};
 
 	socket.on('updateUserList', function(data){
-		console.log("othersJoinRoom: userList ");
-		console.log(data);
+		for (var i=0;i<data.length;i++){
+			if (data[i].id == socket.username){
+				$scope.username = data[i].name;
+				data.splice(i,1);
+				break;
+			}
+		}
 		$scope.userlist = data;
 	});
 
 
 	/*
-		CHAT
-	*/
-	$scope.toggleSelectColor = function(data) {
-		console.log("toggleSelectColor:"+data);
-		$scope.userColor=data;
-	};
-
-	/*
 		LOAD
 	*/
 	socket.on('onLoad', function(data){
+		console.log("--onLoad Data--");
 		console.log(data);
 		if (data == null){
-			console.log("onLoad complete: no data");
+			console.log("-onLoad failed-");
 		} else {
 			//grab the max id
 			$scope.id = data.pop() + 1;
 			$scope.notes = data;
-			console.log("onLoad complete: maxId: "+$scope.id);
+			console.log("-onLoad complete: maxId: "+$scope.id+"-");
 		}
 	});
+
+	/*
+		CHAT
+	*/
+	
+
+	var addChatMessage = function(message){
+		var chatbody = document.getElementById("chatArea_box");
+		chatbody.innerHTML += message;
+		chatbody.scrollTop = chatbody.scrollHeight;
+		$scope.chatMessage = "";
+	}
+
+	socket.on('chat', function (data) {
+        addChatMessage(data);
+    });
+
+	$scope.sendChatMessage = function(key) {
+		console.log("sending "+$scope.chatMessage);
+		if (key == 27) {
+			$scope.chatMessage = "";
+		} else if (key == 13){
+			var message = '<font color="'+$scope.userColor+'">'+$scope.username+': </font>';
+			//parseMessageForSmiley($chatMessage);
+			message += $scope.chatMessage;
+			message += '<br/>';
+			socket.emit('chat', {cmd:"message", message: message });
+			addChatMessage(message);
+		}
+
+	};
+	
 
 	/*
 		CREATE
@@ -153,7 +228,6 @@ app.controller('MainCtrl', function($scope, socket) {
 		DELETE
 	*/
 	$scope.deleteNote = function(id) {
-		console.log("handleDeletedNoted");
 		$scope.handleDeletedNoted(id);
 		socket.emit('deleteNote', {id: id});
 	};

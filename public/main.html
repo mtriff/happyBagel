@@ -5,11 +5,14 @@
 	<title>rocketNotes</title>
 	
 	<script src="/socket.io/socket.io.js"></script>
+	
+	<!--for fun, hex to name generator -->
+	<script src="http://chir.ag/projects/ntc/ntc.js"></script>
+
 	<script src="/lib/jquery-1.10.1.min.js"></script>
 	<script src="/lib/angular.min.js"></script>
 	<script src="/js/onload.js"></script>
 	<script src="/js/main.js"></script>
-
 
 	<link rel="stylesheet" type="text/css" href="/css/style.css">
 	<link href="/lib/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +22,6 @@
 	<link href="/lib/font-awesome.css" rel="stylesheet">
 	-->
 
-	
 </head>
 
 <body ng-controller="MainCtrl" >
@@ -66,12 +68,15 @@
 						<td class="colorSelected" style="background: #1BA1E2;" ng-click="toggleSelectColor('#1BA1E2')"></td>
 						<td class="colorSelected" style="background: #E51400;" ng-click="toggleSelectColor('#E51400')"></td>
 						<td class="colorSelected" style="background: #339933;" ng-click="toggleSelectColor('#339933')"></td>
+						<td class="colorSelected" ng-click="toggleSelectColor('random')"><center>?</center></td>
 					</tr>
 				</table>
 			</div>
 
-			<div ng-repeat="user in userlist">
-				<p>{{user}}</p>
+			<div ng-repeat="user in userlist" style="margin-top:12px;">
+
+					<div class="user_otherUserColor" style="background: {{user.color}};"></div>
+					<div class="user_otherUserName">{{user.name}}</div>
 			</div>
 		</div>
 
@@ -80,8 +85,8 @@
 				
 		</div>
 			
-			
-		<textarea id="chatArea_input" placeholder="chat message"></textarea>
+		<textarea id="chatArea_input" placeholder="chat message" 
+			on-keyup="sendChatMessage" ng-model="chatMessage">{{chatMessage}}</textarea>
     </div>
 
     <div id="main">

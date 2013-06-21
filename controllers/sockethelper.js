@@ -8,7 +8,6 @@ exports.setUpSockets =  function (path, io){
 	io.of(path).on('connection', function(socket){
 		var room = socket.namespace.name;
 
-		socket.broadcast.emit('general',"someone has joined");
 		
 		//initial load 
 		note.initLoad(room, socket);
@@ -21,7 +20,8 @@ exports.setUpSockets =  function (path, io){
 			socket.username = userId;
 
 			user = {
-				id:userId
+				id:userId,
+				name:userId
 			};
 			userList.push(user);
 
@@ -47,14 +47,32 @@ exports.setUpSockets =  function (path, io){
 
 		//chat
 		socket.on('chat', function(data){
-			console.log('chat data:'+data);
-
-			//add to database
-
-			socket.broadcast.emit('chat', data);
+			switch(data.cmd){
+				case 'name':
+					for (var i=0;i<userList.length;i++){
+						if (userList[i].id == data.message.userId){
+							userList[i].name = data.message.name;
+							break;
+						}
+					}
+					io.of(path).emit('updateUserList', userList);
+					break;
+				case 'color':
+					for (var i=0;i<userList.length;i++){
+						if (userList[i].id == data.message.userId){
+							userList[i].color = data.message.color;
+							break;
+						}
+					}
+					io.of(path).emit('updateUserList', userList);
+					break;
+				case 'message':
+					//TODO: save to db for history?
+					socket.broadcast.emit('chat', data.message);
+					break;
+			}			
+			
 		});
-
-		
 
 
 		//listener for notes
@@ -77,3 +95,20 @@ exports.setUpSockets =  function (path, io){
 
 	})
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

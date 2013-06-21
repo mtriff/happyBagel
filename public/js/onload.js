@@ -1,10 +1,10 @@
 var resizeChatArea = function(){
-	var height_navBar = document.getElementById('nav').offsetHeight;
-	var height_newNote = document.getElementById('side_newNote').offsetHeight;
-	var height_users = document.getElementById('side_user').offsetHeight;
-	var height_chatInput = document.getElementById('chatArea_input').offsetHeight;
+	var height_navBar = document.getElementById('nav').clientHeight;
+	var height_newNote = document.getElementById('side_newNote').clientHeight;
+	var height_users = document.getElementById('side_user').clientHeight;
+	var height_chatInput = document.getElementById('chatArea_input').clientHeight;
 	
-	//console.log($(window).height()+"."+height_navBar+"."+height_newNote+"."+height_users+"."+height_chatInput);
+	console.log($(window).height()+"."+height_navBar+"."+height_newNote+"."+height_users+"."+height_chatInput);
 	var chatArea = document.getElementById('chatArea_box');
 
 	chatArea.style.height = $(window).height() - height_navBar - height_newNote - height_users - height_chatInput + "px";
@@ -20,24 +20,28 @@ var updateUserColor = function () {
 
 	$(".colorSelected").click(function(){
 		$("#user_selectColor").slideToggle();
+		$("#chatArea_input").focus();
 	})
 }
-var updateUsername = function () {
-
+var updateUsername = function (socket) {
 
 	$("#user_self")
 		.keyup(function(e){
-        	if (e.keyCode == 13){
-        		console.log("enter! now take focus off");
+        	if (e.keyCode == 13 || e.keyCode == 27){
         		$(this).blur();
         	}
     	})
     	.blur(function(){
-    		console.log("clicked outside");
+    		$("#chatArea_input").focus();
+	    	socket.emit('chat', {cmd:"name", 
+				message: {
+					userId: $("#user_self").attr("name"),
+					name: $(this).val()
+				}}
+			);
 
     	})
     	.focus(function(){
-    		console.log("just clicked, select all");
     		$(this).select();
     	})
     	.mouseup(function(e){
@@ -45,6 +49,11 @@ var updateUsername = function () {
     	});
 }
 
+
+/*
+	DEPRECIATED
+	replaced with angular code
+*/
 var updateChatBox = function (){
 	var messages = [];
 	var socket = io.connect(window.location.pathname);
@@ -77,12 +86,15 @@ var updateChatBox = function (){
 
 
 $(document).ready(function(){
+	var socket = io.connect(window.location.pathname);
 	resizeChatArea();
 	updateUserColor();
-	updateUsername();
-	updateChatBox();
+	updateUsername(socket);
+	//updateChatBox();
 });
 
 $(window).resize(function(){
 	resizeChatArea();
 });
+
+

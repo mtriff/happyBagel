@@ -71,7 +71,6 @@ exports.initLoad = function(room, socket){
 			socket.emit('onLoad', null);
 		}
 		else {
-			//
 			var notes = data[0].notes;
 			
 			var returnNotes = [];
