@@ -14,9 +14,10 @@
 	<script src="/js/onload.js"></script>
 	<script src="/js/main.js"></script>
 
-	<link rel="stylesheet" type="text/css" href="/css/style.css">
+	
 	<link href="/lib/bootstrap.min.css" rel="stylesheet">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">
 
 	<!-- TODO: fix issue with mime. send font-woff, not font/woof
 	<link href="/lib/font-awesome.css" rel="stylesheet">
@@ -90,29 +91,28 @@
     </div>
 
     <div id="main">
+
         <div id="main_filter" class="btn-toolbar">
   			<div class="btn-group">
-  				<button class="btn"><i class="icon-play-sign icon-large"></i></button>
-  				<button class="btn"><i class="icon-external-link icon-large"></i></button>
-  				<button class="btn"><i class="icon-youtube-play icon-large"></i></button>
-  				<button class="btn"><i class="icon-code icon-large"></i></button>
-  				<button class="btn"><i class="icon-file-text icon-large"></i></button>
-  				<button class="btn"><i class="icon-instagram icon-large"></i></button>
-  				<button class="btn"><i class="icon-edit icon-large"></i></button>
-  				<button class="btn"><i class="icon-headphones icon-large"></i></button>
-  				<button class="btn"><i class="icon-list icon-large"></i></button>
+  				<button class="btn"><i class="icon-external-link icon-large"></i></button> <!--Links-->
+  				<button class="btn"><i class="icon-list icon-large"></i></button> <!--List-->
+  				<!--button class="btn"><i class="icon-code icon-large"></i></button> <!--Code-->
+  				<button class="btn"><i class="icon-file-text icon-large"></i></button> <!--File-->
+  				<button class="btn"><i class="icon-instagram icon-large"></i></button> <!--Photos--> 
+  				<button class="btn"><i class="icon-headphones icon-large"></i></button> <!--Music-->
+  				<button class="btn"><i class="icon-youtube-play icon-large"></i></button> <!--Video-->
   			</div>
 		</div>
 
         <div id="main_notes" sticky-note ng-repeat="note in notes" note="note" class="alert alert-block" ondelete="deleteNote(id)">
 				
-			<div>
+
 				<button type="button" class="close" ng-click="deleteNote(note.id)">&times;</button>
 
-				<input ng-model="note.title" ng-change="updateNote(note)" type="text" class="title" >
+				<input ng-model="note.title" ng-change="updateNote(note)" type="text" class="notes_title" >
 			
-				<textarea ng-model="note.body" ng-change="updateNote(note)" class="body">{{note.body}}</textarea>
-			</div>
+				<textarea ng-model="note.body" ng-change="updateNote(note)" class="notes_body">{{note.body}}</textarea>
+
 		</div>
     </div>
 </div>
