@@ -2,7 +2,7 @@
 <html ng-app="app" lang='en'>
 <head>
 
-	<title>rocketNotes</title>
+	<title>rapdify</title>
 	
 	<script src="/socket.io/socket.io.js"></script>
 	
@@ -31,7 +31,7 @@
 <div id="nav">
     <div class="navbar">
 	  <div class="navbar-inner">
-	    <a class="brand" href="#">rocketNotes / </a>
+	    <a class="brand" href="#">rapidify / </a>
 	  </div>
 	</div>
 </div>
@@ -104,16 +104,34 @@
   			</div>
 		</div>
 
-        <div id="main_notes" sticky-note ng-repeat="note in notes" note="note" class="alert alert-block" ondelete="deleteNote(id)">
-				
-
-				<button type="button" class="close" ng-click="deleteNote(note.id)">&times;</button>
-
-				<input ng-model="note.title" ng-change="updateNote(note)" type="text" class="notes_title" >
-			
-				<textarea ng-model="note.body" ng-change="updateNote(note)" class="notes_body">{{note.body}}</textarea>
-
+		<div id="main_notes_container" class="row">
+	        <div id="main_notes" sticky-note ng-repeat="note in notes" note="note" ondelete="deleteNote(id)" class="span1">
+				<div id="notes_container">	
+					<input ng-model="note.title" ng-change="updateNote(note)" type="text" id="notes_title" >
+					<textarea ng-model="note.body" ng-change="updateNote(note)"
+						id="{{note.id}}" 
+						class="notes_body" 
+						onkeyup="handleNoteSize(this, 'keyUp');" 
+						onfocus="handleNoteSize(this, 'focus');" 
+						onfocusout="handleNoteSize(this, 'focusOut');">
+							{{note.body}}
+						</textarea>
+				</div>
+				<div id="notes_sidebar">
+					
+					<table >
+						<tr>
+							<td><button ng-click="deleteNote(note.id)" id="notes_buttons"><i class="icon-remove"></i></button></td>
+						</tr>
+						<tr>
+							<td><button ng-click="resizeNote(note.id)" id="notes_buttons"><i class="icon-resize-vertical"></i></button></td>
+						</tr>
+					</table>
+				</div>
+			</div><!--main _notes-->
 		</div>
+
+
     </div>
 </div>
 

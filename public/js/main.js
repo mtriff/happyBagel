@@ -36,6 +36,23 @@ app.directive('stickyNote', function(socket) {
 		};
 
 		/*
+			EXPAND
+		*/
+		$scope.resizeNote = function(id){
+			var note = document.getElementById(id);
+			console.log(note);
+			console.log(note.style.height);
+			if (note.style.height == "48px") {
+				note.style.height = 'auto';
+				note.style.overflow = 'hidden';
+				var newHeight = (note.scrollHeight > 32 ? note.scrollHeight : 32);
+				note.style.height = newHeight.toString() + 'px';
+			} else {
+				note.style.height = '48px';
+				ele.style.overflow = 'scroll';
+			}
+		};
+		/*
 			UPDATE
 		*/
 		$scope.updateNote = function(note) {
@@ -50,13 +67,29 @@ app.directive('stickyNote', function(socket) {
 		});	
 	};
 
-	
+
+	var linker = function(scope, element, attrs) {
+		
+
+			// Some DOM initiation to make it nice
+			element.hide().fadeIn();
+			var child = element.children();
+			console.log(child);
+
+			var close = child[1];
+
+
+
+	};
+
 	return {
 		restrict: 'A',
+		link: linker,
 		controller: controller,
 		scope: {
 			note: '=', //send in a property on the scope to bind to
-			ondelete: '&' //& - so we can call the ctrl's deleteNote
+			ondelete: '&', //& - so we can call the ctrl's deleteNote
+			onresize: '&'
 		}
 	};
 });
@@ -241,12 +274,13 @@ app.controller('MainCtrl', function($scope, socket) {
 		});
 
 		$scope.notes = newNotes;
-	}
+	};
 
 	socket.on('onNoteDeleted', function(data) {
 		$scope.handleDeletedNoted(data.id);
 	});
 	
+
 	/*
 		FILTER
 	*/
@@ -267,7 +301,7 @@ app.controller('MainCtrl', function($scope, socket) {
 			default:
 				console.log("unknown filter");
 		}
-	}
+	};
 
 
 });

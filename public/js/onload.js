@@ -1,14 +1,20 @@
-var resizeChatArea = function(){
-	var height_navBar = document.getElementById('nav').clientHeight;
-	var height_newNote = document.getElementById('side_newNote').clientHeight;
-	var height_users = document.getElementById('side_user').clientHeight;
-	var height_chatInput = document.getElementById('chatArea_input').clientHeight;
-	
-	console.log($(window).height()+"."+height_navBar+"."+height_newNote+"."+height_users+"."+height_chatInput);
-	var chatArea = document.getElementById('chatArea_box');
+var resizeDivs = function(){
 
+	//resize chat area box
+	var height_navBar = 52;
+	var height_newNote = 120;
+	var height_users = 130;
+	var height_chatInput = 48;
+	//console.log($(window).height()+"."+height_navBar+"."+height_newNote+"."+height_users+"."+height_chatInput);
+	var chatArea = document.getElementById('chatArea_box');
 	chatArea.style.height = $(window).height() - height_navBar - height_newNote - height_users - height_chatInput + "px";
+	console.log("setting chat area to "+chatArea.style.height);
 	chatArea.scrollTop = 10000;
+
+	//resize main notes container
+
+	var mainNotes = document.getElementById('main_notes_container');
+	mainNotes.style.height = $(window).height() - height_navBar - 50 + "px";
 
 }
 
@@ -87,14 +93,44 @@ var updateChatBox = function (){
 
 $(document).ready(function(){
 	var socket = io.connect(window.location.pathname);
-	resizeChatArea();
+	resizeDivs();
 	updateUserColor();
 	updateUsername(socket);
 	//updateChatBox();
 });
 
 $(window).resize(function(){
-	resizeChatArea();
+	resizeDivs();
 });
 
+
+
+function handleNoteSize(ele, event)
+{
+	console.log("lets find the id of this ele");
+	console.log(ele);
+	console.log(event);
+	switch(event){
+		case 'focus':
+			ele.style.height = 'auto';
+			ele.style.overflow = 'hidden';
+			var newHeight = (ele.scrollHeight > 32 ? ele.scrollHeight : 32);
+			ele.style.height = newHeight.toString() + 'px';
+			break;
+		case 'focusOut':
+
+		//	ele.style.height = '48px';
+		//	ele.style.overflow= 'scroll';
+
+			break;
+		case 'keyUp':
+			ele.style.height = 'auto';
+			var newHeight = (ele.scrollHeight > 32 ? ele.scrollHeight : 32);
+			ele.style.height = newHeight.toString() + 'px';
+			break;
+
+	}	
+
+	
+}
 
