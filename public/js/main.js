@@ -34,14 +34,23 @@ app.directive('stickyNote', function(socket) {
 				id: id
 			});
 		};
+		/*
+			EMAIL
+		*/
 
+		$scope.emailNote = function (id){
+			var title = $("#title_"+id).val();
+			var body = $("#"+id).val();
+			var myMailTo = ["mailto:",
+							"?subject=APPNAME.io"+window.location.pathname+" - "+title,
+							"&body="+body].join("\n");
+			window.location.href = myMailTo;
+		}
 		/*
 			EXPAND
 		*/
 		$scope.resizeNote = function(id){
 			var note = document.getElementById(id);
-			console.log(note);
-			console.log(note.style.height);
 			if (note.style.height == "48px") {
 				note.style.height = 'auto';
 				note.style.overflow = 'hidden';

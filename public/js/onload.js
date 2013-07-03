@@ -97,6 +97,8 @@ $(document).ready(function(){
 	updateUserColor();
 	updateUsername(socket);
 	//updateChatBox();
+
+
 });
 
 $(window).resize(function(){

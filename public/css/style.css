@@ -211,7 +211,7 @@ textarea {
 
 .notes_container
 {
-    width:365px;
+    width:360px;
     float:left;
 
 }
@@ -230,7 +230,7 @@ textarea {
     border: none;
     background-color: #ffffff;
     margin-bottom: 0px;
-    width:353px;
+    width:348px;
     font-size: 16px;
     margin-top: 1px;
 
@@ -239,7 +239,7 @@ textarea {
 .notes_body {
     border: none;
     background-color: #ffffff;
-    width:353px;
+    width:348px;
     height:48px;
     overflow-y:hidden;
 

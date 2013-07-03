@@ -37,7 +37,6 @@
 </div>
 
 
-
 <div id="container">
     <div id="side">
        <div id="side_newNote">
@@ -48,7 +47,6 @@
 			</button>
 			
 		</div>
-		
 
 		<div id="side_user">
 			<div id="user_color" ng-model="userColor" style="background: {{userColor}}"></div>
@@ -131,6 +129,9 @@
 							<td><button ng-click="deleteNote(note.id)" id="notes_buttons"><i class="icon-remove"></i></button></td>
 						</tr>
 						<tr>
+							<td><button ng-click="emailNote(note.id)" id="notes_buttons"><i class="icon-envelope"></i></button></td>
+						</tr>
+						<tr>
 							<td><button ng-click="resizeNote(note.id)" id="notes_buttons"><i class="icon-resize-vertical"></i></button></td>
 						</tr>
 					</table>
@@ -144,8 +145,6 @@
 
     </div>
 </div>
-
-
 
 
 
