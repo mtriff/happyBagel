@@ -8,7 +8,6 @@ var resizeDivs = function(){
 	//console.log($(window).height()+"."+height_navBar+"."+height_newNote+"."+height_users+"."+height_chatInput);
 	var chatArea = document.getElementById('chatArea_box');
 	chatArea.style.height = $(window).height() - height_navBar - height_newNote - height_users - height_chatInput + "px";
-	console.log("setting chat area to "+chatArea.style.height);
 	chatArea.scrollTop = 10000;
 
 	//resize main notes container
@@ -24,8 +23,8 @@ var updateUserColor = function () {
 		$("#user_selectColor").slideToggle();
 	});
 
-	$(".colorSelected").click(function(){
-		$("#user_selectColor").slideToggle();
+	$(".colorSnotected").click(function(){
+		$("#user_snotectColor").slideToggle();
 		$("#chatArea_input").focus();
 	})
 }
@@ -48,7 +47,7 @@ var updateUsername = function (socket) {
 
     	})
     	.focus(function(){
-    		$(this).select();
+    		$(this).snotect();
     	})
     	.mouseup(function(e){
     		e.preventDefault();
@@ -91,8 +90,9 @@ var updateChatBox = function (){
 }
 
 
+var socket = io.connect(window.location.pathname);
+
 $(document).ready(function(){
-	var socket = io.connect(window.location.pathname);
 	resizeDivs();
 	updateUserColor();
 	updateUsername(socket);
@@ -105,32 +105,105 @@ $(window).resize(function(){
 
 
 
-function handleNoteSize(ele, event)
+
+socket.on('focus', function (data) {
+	var title = document.getElementById("title_"+data.noteid);
+	var note = document.getElementById(data.noteid);
+	title.style.mozBoxShadow = "0 0 5px "+data.color;
+	title.style.webkitBoxShadow = "0 0 5px "+data.color;
+	title.style['boxShadow']="0 0 5px #888 "+data.color;
+	note.style.mozBoxShadow = "0 0 5px "+data.color;
+	note.style.webkitBoxShadow = "0 0 5px "+data.color;
+	note.style['boxShadow']="0 0 5px #888 "+data.color;
+});
+
+function rgb2hex(rgb) {
+	if (  rgb.search("rgb") == -1 ) {
+  		return rgb;
+	} else {
+  		rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+))?\)$/);
+  		function hex(x) {
+       		return ("0" + parseInt(x).toString(16)).slice(-2);
+  		}
+  		return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]); 
+	}
+}
+
+function handleNoteSize(note, event)
 {
-	console.log("lets find the id of this ele");
-	console.log(ele);
-	console.log(event);
+
 	switch(event){
 		case 'focus':
-			ele.style.height = 'auto';
-			ele.style.overflow = 'hidden';
-			var newHeight = (ele.scrollHeight > 32 ? ele.scrollHeight : 32);
-			ele.style.height = newHeight.toString() + 'px';
+			note.style.height = 'auto';
+			note.style.overflow = 'hidden';
+			var newHeight = (note.scrollHeight > 32 ? note.scrollHeight : 32);
+			note.style.height = newHeight.toString() + 'px';
+
+			var color = document.getElementById("user_color").style.background;
+			var hex = rgb2hex(color);
+			var title = document.getElementById("title_"+note.id);
+			title.style.mozBoxShadow = "0 0 5px "+hex;
+			title.style.webkitBoxShadow = "0 0 5px "+hex;
+			title.style['boxShadow']="0 0 5px #888 "+hex;
+			note.style.mozBoxShadow = "0 0 5px "+hex;
+			note.style.webkitBoxShadow = "0 0 5px "+hex;
+			note.style['boxShadow']="0 0 5px #888 "+hex;
+
+			socket.emit('focus', {noteid: note.id, color:hex});
+
+
 			break;
 		case 'focusOut':
+			var title = document.getElementById("title_"+note.id);
+			title.style.mozBoxShadow = "";
+			title.style.webkitBoxShadow = "";
+			title.style['boxShadow']="";
+			note.style.mozBoxShadow = "";
+			note.style.webkitBoxShadow = "";
+			note.style['boxShadow']="";
 
-		//	ele.style.height = '48px';
-		//	ele.style.overflow= 'scroll';
+			socket.emit('focus', {noteid: note.id, color:"#ffffff"});
+
 
 			break;
 		case 'keyUp':
-			ele.style.height = 'auto';
-			var newHeight = (ele.scrollHeight > 32 ? ele.scrollHeight : 32);
-			ele.style.height = newHeight.toString() + 'px';
+			note.style.height = 'auto';
+			var newHeight = (note.scrollHeight > 32 ? note.scrollHeight : 32);
+			note.style.height = newHeight.toString() + 'px';
 			break;
 
 	}	
 
 	
+}
+
+function sendBoxShadow(title, event){
+	switch(event) {
+		case 'focus':
+			var color = document.getElementById("user_color").style.background;
+			var hex = rgb2hex(color);
+
+			title.style.mozBoxShadow = "0 0 5px "+hex;
+			title.style.webkitBoxShadow = "0 0 5px "+hex;
+			title.style['boxShadow']="0 0 5px #888 "+hex;
+			var note = document.getElementById(title.id.substring(6));
+			note.style.mozBoxShadow = "0 0 5px "+hex;
+			note.style.webkitBoxShadow = "0 0 5px "+hex;
+			note.style['boxShadow']="0 0 5px #888 "+hex;
+
+			socket.emit('focus', {noteid: title.id.substring(6), color:hex});
+			break;
+		case 'focusOut':
+			title.style.mozBoxShadow = "";
+			title.style.webkitBoxShadow = "";
+			title.style['boxShadow']="";
+			var note = document.getElementById(title.id.substring(6));
+			note.style.mozBoxShadow = "";
+			note.style.webkitBoxShadow = "";
+			note.style['boxShadow']="";
+
+			socket.emit('focus', {noteid: title.id.substring(6), color:"#ffffff"});
+			break;
+	}
 }
 

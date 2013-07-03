@@ -49,7 +49,7 @@ app.directive('stickyNote', function(socket) {
 				note.style.height = newHeight.toString() + 'px';
 			} else {
 				note.style.height = '48px';
-				ele.style.overflow = 'scroll';
+				note.style.overflow = 'scroll';
 			}
 		};
 		/*
@@ -74,8 +74,6 @@ app.directive('stickyNote', function(socket) {
 			// Some DOM initiation to make it nice
 			element.hide().fadeIn();
 			var child = element.children();
-			console.log(child);
-
 			var close = child[1];
 
 

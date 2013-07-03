@@ -91,6 +91,10 @@ exports.setUpSockets =  function (path, io){
 			socket.broadcast.emit('onNoteDeleted', data);
 		});
 
+		//focus on note
+		socket.on('focus', function(data){
+			io.of(path).emit('focus', data);
+		});
 		
 
 	})

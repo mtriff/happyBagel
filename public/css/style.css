@@ -206,13 +206,14 @@ textarea {
 #main_notes
 {
      background-color: #eeeeee;   
-     width:294px;
+     width:394px;
 }
 
-#notes_container
+.notes_container
 {
-    width:265px;
+    width:365px;
     float:left;
+
 }
 
 #notes_sidebar
@@ -224,22 +225,30 @@ textarea {
     border: none;
 
 }
-#notes_title {
+.notes_title[type="text"] {
 
     border: none;
-    background-color: #6bf74b;
+    background-color: #ffffff;
     margin-bottom: 0px;
-    width:253px;
+    width:353px;
     font-size: 16px;
+    margin-top: 1px;
 
 }
 
 .notes_body {
     border: none;
-    background-color: #77feb3;
-    width:253px;
+    background-color: #ffffff;
+    width:353px;
     height:48px;
     overflow-y:hidden;
+
+    /*
+    transition: height 0.5s;
+    -webkit-transition: height 0.5s; /* Safari 
+    */
+
+
 
 
 }
