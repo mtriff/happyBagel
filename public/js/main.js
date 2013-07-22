@@ -43,7 +43,7 @@ app.directive('stickyNote', function(socket) {
 			var body = $("#"+id).val();
 			body = body.replace(/(\r\n|\n|\r)/gm, "%0D%0A");
 			var myMailTo = ["mailto:",
-							"?subject=APPNAME.io"+window.location.pathname+" - "+title,
+							"?subject=rapid"+window.location.pathname+" - "+title,
 							"&body="+body].join("\n");
 			window.location.href = myMailTo;
 		}

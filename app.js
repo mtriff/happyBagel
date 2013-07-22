@@ -96,8 +96,8 @@ app.get("/*", function (req, res){
 });
 
 
-server.listen(8000, function(){
-	console.log("server listening 1337");
+server.listen(3000, function(){
+	console.log("server listening 3000");
 });
 
 
