@@ -41,6 +41,7 @@ app.directive('stickyNote', function(socket) {
 		$scope.emailNote = function (id){
 			var title = $("#title_"+id).val();
 			var body = $("#"+id).val();
+			body = body.replace(/(\r\n|\n|\r)/gm, "%0D%0A");
 			var myMailTo = ["mailto:",
 							"?subject=APPNAME.io"+window.location.pathname+" - "+title,
 							"&body="+body].join("\n");

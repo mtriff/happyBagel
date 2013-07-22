@@ -96,7 +96,7 @@ app.get("/*", function (req, res){
 });
 
 
-server.listen(1337, function(){
+server.listen(8000, function(){
 	console.log("server listening 1337");
 });
 

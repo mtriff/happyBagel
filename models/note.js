@@ -105,7 +105,7 @@ exports.saveNote = function(room, data) {
 }
 
 exports.updateNote = function(room, data){
-	console.log("updateNote "+room+" "+data.id);
+	console.log("updateNote "+room+" "+data.body);
 	Notes.update({room:room, "notes.id":data.id}
 		, {$set: {"notes.$.title":data.title,"notes.$.body":data.body}}).exec();
 }
