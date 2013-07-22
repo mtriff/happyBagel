@@ -23,8 +23,8 @@ var updateUserColor = function () {
 		$("#user_selectColor").slideToggle();
 	});
 
-	$(".colorSnotected").click(function(){
-		$("#user_snotectColor").slideToggle();
+	$(".colorSelected").click(function(){
+		$("#user_selectColor").slideToggle();
 		$("#chatArea_input").focus();
 	})
 }
