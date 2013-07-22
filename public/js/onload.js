@@ -47,7 +47,7 @@ var updateUsername = function (socket) {
 
     	})
     	.focus(function(){
-    		$(this).snotect();
+    		$(this).select();
     	})
     	.mouseup(function(e){
     		e.preventDefault();
